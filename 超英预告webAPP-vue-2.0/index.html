@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <!--viewport一定要加 user-scalable 值可以是yes|no或1|0 -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+  <!-- 禁止将数字转为号码 -->
+  <meta name="format-detection" content="telephone=no" />
+  <!-- 控制顶栏状态栏显示样式，可以为透明 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!-- 添加一个网站图标，这样当你将网站添加到桌面图标时，会显示出来 -->
+  <link rel="apple-touch-icon-precomposed" href="mobile_logo.png?v1" />
+  <title>首页网</title>
+  <!-- 重置样式 -->
+  <link rel="stylesheet" href="css/reset.css">
+  <!-- 图标字体 -->
+  <link rel="stylesheet" href="css/font/iconfont.css">
+  <!-- 本页样式 -->
+  <link rel="stylesheet" href="css/index.css">
+  <!-- 公共样式 -->
+  <link rel="stylesheet" href="css/common.css">
+  <!-- JQ -->
+  <script src="js/jquery-3.5.1.min.js"></script>
+  <!-- vue -->
+  <script src="js/vue.v2.6.12.js"></script>
+  <!-- 轮播图JS -->
+  <script src="js/TouchSlide.1.1.js"></script>
+  <!-- 本页JS -->
+  <script src="js/index.js"></script>
+  <!-- 将px转rem的公式代码 -->
+  <script>
+    var w = document.documentElement.getBoundingClientRect().width;
+    //7.5是根据设计图的大小除以100，需要按照你的实际设计图换算
+    var bili = w / 7.5;
+    document.documentElement.style.fontSize = bili + "px";
+    // 此时  100px=1rem
+    // 将所有在设计图量出的尺寸都除以100即可转为对应的rem
+  </script>
+</head>
+
+<body>
+  <!-- 页头-轮播图 -->
+  <div id="slideBox" class="slideBox">
+    <div class="bd">
+      <ul>
+        <li v-for="item in data">
+          <a class="pic block" href="#"><img style="width: 100%;" :src="item.image" alt="" /></a>
+        </li>
+      </ul>
+    </div>
+    <!-- 小圆点指示器 -->
+    <div class="hd">
+      <ul></ul>
+    </div>
+  </div>
+  <script type="text/javascript">
+    let vm = new Vue({
+      el: "#slideBox",
+      data: {
+        data: ""
+      }
+    })
+    $.ajax({
+      type: "get",
+      url: "json/index-slide.json",
+      success: function (res) {
+        console.log(res.data)
+        vm.data = res.data
+      },
+      error: function (err) {
+        alert("数据获取失败，请稍后再试！")
+      }
+    });
+    $(function () {
+      TouchSlide({
+        slideCell: "#slideBox",
+        titCell: ".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+        mainCell: ".bd ul",
+        effect: "leftLoop",
+        autoPage: true, //自动分页
+        autoPlay: true //自动播放
+      });
+    })
+  </script>
+  <!-- 页面主体 -->
+  <div class="main">
+    <!-- 热门超英 -->
+    <div class="hot-super" id="hot">
+      <div class="title">
+        <i class="iconfont icon-huoremen hot fb" style="color: #e5776a;font-size: 0.3rem;margin-right: 0.1rem;"></i>
+        <span class="fb">热门超英</span>
+      </div>
+      <div class="hot-content pore" style="width:100%;overflow-y: auto;">
+        <div class="clearfix drag" :style="{width:len}">
+          <div class="item fl" v-for="i in data">
+            <a :href="i.trailer">
+              <img :src="i.cover" alt="" style="width: 100%;">
+              <div class="title2 fb cutFont">{{i.name}}</div>
+              <div class="fen-fa">
+                <i class="iconfont icon-xingxing" :class="{yellow:i.score>=2}"></i>
+                <i class="iconfont icon-xingxing" :class="{yellow:i.score>=4}"></i>
+                <i class="iconfont icon-xingxing" :class="{yellow:i.score>=6}"></i>
+                <i class="iconfont icon-xingxing" :class="{yellow:i.score>=8}"></i>
+                <i class="iconfont icon-xingxing" :class="{yellow:i.score>=10}"></i>
+                <span class="fen">{{i.score}}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        let vm2 = new Vue({
+          el: "#hot",
+          data: {
+            data: "",
+            len: ""
+          }
+        })
+        $.ajax({
+          type: "get",
+          url: "json/index-hot.json",
+          success: function (res) {
+            vm2.data = res.data
+            vm2.len = (res.data.length) * 2.2 + 0.2 + "rem"
+          },
+          error: function (err) {
+            alert("数据获取失败，请稍后再试！")
+          }
+        });
+      })
+    </script>
+    <!-- 热门预告 -->
+    <div class="pre clearfix" id="pre">
+      <div class="title">
+        <i class="iconfont icon-kaochayugao hot fb" style="color: #9ff09b;font-size: 0.3rem;margin-right: 0.1rem;"></i>
+        <span class="fb">热门预告</span>
+      </div>
+      <div class="wrap pore" style="width:100%;overflow-y: auto;height: 2.2rem;">
+        <div class="clearfix drag" :style="{width:len}">
+          <div class="pre-item fl pore" v-for="i in data">
+            <div class="mask"></div>
+            <a :href="i.trailer" class="iconfont icon-bofang btn" id="bo"></a>
+            <div class="time">
+              {{parseInt(parseInt(i.totalTime.slice(5))/60)}}:{{parseInt(parseInt(i.totalTime.slice(5))%60)}}</div>
+            <video id="video" :src="i.trailer" :poster="i.poster"
+              style="width: 100%;height: 100%;display: block;"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        let vm3 = new Vue({
+          el: "#pre",
+          data: {
+            data: "",
+            len: "",
+          }
+        })
+        $.ajax({
+          type: "get",
+          url: "json/index-hot.json",
+          success: function (res) {
+            vm3.data = res.data
+            vm3.len = (res.data.length) * 3.6 + "rem"
+          },
+          error: function (err) {
+            alert("数据获取失败，请稍后再试！")
+          }
+        });
+      })
+    </script>
+    <!-- 猜你喜欢 -->
+    <div class="like" id="like">
+      <div class="title">
+        <i class="iconfont icon-qunfengcainixihuanxian hot fb"
+          style="color: #7fcdf7;font-size: 0.3rem;margin-right: 0.1rem;"></i>
+        <span class="fb">猜你喜欢</span>
+      </div>
+      <div class="like-content clearfix" v-for="i in data">
+        <div class="pic fl">
+          <a :href="i.trailer">
+            <img :src="i.cover" alt="">
+          </a>
+        </div>
+        <div class="info fl">
+          <a :href="i.trailer">
+            <div class="title2 cutFont" style="display: block;width: 100%;">{{i.name}}</div>
+            <div class="fen-fa">
+              <i class="iconfont icon-xingxing" :class="{yellow:i.score>=2}"></i>
+              <i class="iconfont icon-xingxing" :class="{yellow:i.score>=4}"></i>
+              <i class="iconfont icon-xingxing" :class="{yellow:i.score>=6}"></i>
+              <i class="iconfont icon-xingxing" :class="{yellow:i.score>=8}"></i>
+              <i class="iconfont icon-xingxing" :class="{yellow:i.score>=10}"></i>
+            </div>
+            <div class="text">{{i.basicInfo}}</div>
+            <div class="text">{{i.releaseDate}}</div>
+          </a>
+        </div>
+        <a href="#" class="good fl tc">
+          <div class="icon tc">
+            <i class="iconfont icon-zan"></i>
+          </div>
+          <div class="tc">赞一下</div>
+        </a>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        let vm4 = new Vue({
+          el: "#like",
+          data: {
+            data: "",
+          }
+        })
+        $.ajax({
+          type: "get",
+          url: "json/index-hot.json",
+          success: function (res) {
+            vm4.data = res.data
+          },
+          error: function (err) {
+            alert("数据获取失败，请稍后再试！")
+          }
+        });
+      })
+    </script>
+  </div>
+  <!-- 页尾 -->
+  <div class="footer">
+    <a href="index.html" class="item tc on">
+      <div>
+        <div>
+          <i class="iconfont icon-dianyingpiao"></i>
+        </div>
+        <p>首页</p>
+      </div>
+    </a>
+    <a href="search.html" class="item tc">
+      <div>
+        <div>
+          <i class="iconfont icon-sousuo"></i>
+        </div>
+        <p>搜索</p>
+      </div>
+    </a>
+    <a href="mine.html" class="item tc">
+      <div>
+        <div>
+          <i class="iconfont icon-04"></i>
+        </div>
+        <p>我的</p>
+      </div>
+    </a>
+  </div>
+</body>
+
+</html>

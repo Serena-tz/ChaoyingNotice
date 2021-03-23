@@ -1,0 +1,30 @@
+{
+    "status": 200,
+    "msg": "OK",
+    "data": [
+        {
+            "staffId": "s-1070",
+            "name": "汤姆·哈迪",
+            "sex": 1,
+            "photo": "http://122.152.205.72:88/group1/M00/00/04/CpoxxFw9iWCATnktAAJKgrN2poY145.png",
+            "role": 2,
+            "actName": "毒液"
+        },
+        {
+            "staffId": "s-1165",
+            "name": "米歇尔·威廉姆斯",
+            "sex": 0,
+            "photo": "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_Ix2ARks-AAI0X1Il-ro838.png",
+            "role": 2,
+            "actName": "安妮·韦英"
+        },
+        {
+            "staffId": "s-1166",
+            "name": "里兹·阿迈德",
+            "sex": 1,
+            "photo": "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_I4qAAYgTAAFfKos0dgQ231.png",
+            "role": 2,
+            "actName": "德雷克博士"
+        }
+    ]
+}

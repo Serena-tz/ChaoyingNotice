@@ -1,0 +1,30 @@
+/* 头部 */
+.header{
+    height: 2.93rem;
+    background: url(../img/bg.png) no-repeat;
+    background-size: contain;
+}
+.pic{
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/pic.png) no-repeat;
+    background-size: contain;
+    margin: 1.2rem 0 0 0.3rem;
+}
+.text{
+    margin: 1.55rem 0 0 0.5rem;
+    font-size: 0.34rem;
+    color: #675115;
+}
+/* 主体 */
+.main>div{
+    background: url(../img/word.png) no-repeat;
+    background-size: contain;
+    height: 5.67rem;
+    width: 1rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 0.55rem;
+}

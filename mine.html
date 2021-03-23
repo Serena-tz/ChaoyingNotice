@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!--viewport一定要加 user-scalable 值可以是yes|no或1|0 -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0, user-scalable=0" />
+  <!-- 禁止将数字转为号码 -->
+  <meta name="format-detection" content="telephone=no" />
+  <!-- 控制顶栏状态栏显示样式，可以为透明 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!-- 添加一个网站图标，这样当你将网站添加到桌面图标时，会显示出来 -->
+  <link rel="apple-touch-icon-precomposed" href="mobile_logo.png?v1" />
+  <title>我的</title>
+  <!-- 重置样式 -->
+  <link rel="stylesheet" href="css/reset.css">
+  <!-- 图标字体 -->
+  <link rel="stylesheet" href="css/font/iconfont.css">
+  <!-- 公共样式 -->
+  <link rel="stylesheet" href="css/common.css">
+  <!-- 本页样式 -->
+  <link rel="stylesheet" href="css/mine.css">
+  <!-- 本页JS -->
+  <script src="js/index.js"></script>
+  <!-- 将px转rem的公式代码 -->
+  <script>
+    var w=document.documentElement.getBoundingClientRect().width;
+    //7.5是根据设计图的大小除以100，需要按照你的实际设计图换算
+    var bili=w/7.5;
+    document.documentElement.style.fontSize=bili+"px";
+    // 此时  100px=1rem
+    // 将所有在设计图量出的尺寸都除以100即可转为对应的rem
+  </script>
+</head>
+<body>
+  <!-- 页头 -->
+    <div class="header clearfix">
+      <div class="pic fl"></div>
+      <div class="fl text fb">
+        <a href="#">注册</a>
+        <span>/</span>
+        <a href="#">登录</a>
+      </div>
+    </div>
+  <!-- 页面主体 -->
+    <div class="main pore">
+      <div></div>
+    </div>
+  <!-- 页尾 -->
+  <div class="footer">
+    <a href="index.html" class="item tc">
+      <div>
+        <div>
+          <i class="iconfont icon-dianyingpiao"></i>
+        </div>
+        <p>首页</p>
+      </div>
+    </a>
+    <a href="search.html" class="item tc">
+      <div>
+        <div>
+          <i class="iconfont icon-sousuo"></i>
+        </div>
+        <p>搜索</p>
+      </div>
+    </a>
+    <a href="mine.html" class="item tc on">
+      <div>
+        <div>
+          <i class="iconfont icon-04"></i>
+        </div>
+        <p>我的</p>
+      </div>
+    </a>
+  </div>
+</body>
+</html>
